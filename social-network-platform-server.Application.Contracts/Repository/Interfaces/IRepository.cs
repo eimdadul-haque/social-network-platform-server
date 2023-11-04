@@ -9,9 +9,10 @@ namespace social_network_platform_server.Application.Contracts.Repository.Interf
     public interface IRepository<TEntity> where TEntity : class 
     {
         Task<TEntity> AddAsync(TEntity entity);
-        Task<List<TEntity>> AddRangeAsync(List<TEntity> entitys);
+        Task<List<TEntity>> AddRangeAsync(List<TEntity> entities);
         Task<TEntity> GetByIdAsync(Guid Id);
-        Task<List<TEntity>> GetAsync(Guid Id);
-        Task<bool> DeleteAsync(Guid Id, bool isSoft);
+        Task<List<TEntity>> GetAllAsync();
+        Task<bool> DeleteAsync(Guid Id);
+        Task<int> SaveChangeAsync();
     }
 }
