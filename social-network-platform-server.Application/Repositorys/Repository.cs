@@ -1,4 +1,6 @@
-﻿using social_network_platform_server.Application.Contracts.Repository.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using social_network_platform_server.Application.Contracts.Repository.Interfaces;
+using social_network_platform_server.Infrastructure.DbContexts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,29 +11,65 @@ namespace social_network_platform_server.Application.Repositorys
 {
     public class Repository<TEntity> where TEntity : class, IRepository<TEntity>
     {
-        public Task<TEntity> AddAsync(TEntity entity)
+        private readonly ApplicationDbContext _dbContext;
+        public Repository(
+            ApplicationDbContext dbContext)
         {
-            throw new NotImplementedException();
+            _dbContext = dbContext;
         }
 
-        public Task<List<TEntity>> AddRangeAsync(List<TEntity> entitys)
+        public async Task<TEntity> AddAsync(TEntity entity)
         {
-            throw new NotImplementedException();
+            await _dbContext.Set<TEntity>()
+                .AddAsync(entity);
+
+            if (await SaveChangeAsync() > 0)
+                return entity;
+
+            throw new Exception("Entity not added.");
         }
 
-        public Task<bool> DeleteAsync(Guid Id, bool isSoft)
+        public async Task<List<TEntity>> AddRangeAsync(List<TEntity> entities)
         {
-            throw new NotImplementedException();
+            await _dbContext.Set<TEntity>()
+                .AddRangeAsync(entities);
+            if (await SaveChangeAsync() > 0) return entities;
+            throw new Exception("Entity not added.");
         }
 
-        public Task<List<TEntity>> GetAsync(Guid Id)
+        public async Task<TEntity?> GetByIdAsync(Guid Id)
+            => await _dbContext.Set<TEntity>().FindAsync(Id);
+
+        public async Task<List<TEntity>> GetAllAsync()
+            => await _dbContext.Set<TEntity>().ToListAsync();
+
+        public async Task<bool> DeleteAsync(Guid Id)
         {
-            throw new NotImplementedException();
+            var entity = await _dbContext.Set<TEntity>().FindAsync(Id);
+            if (entity is null) throw new Exception("Entity not found.");
+            _dbContext.Set<TEntity>().Remove(entity);
+            return await SaveChangeAsync() > 0;
         }
 
-        public Task<TEntity> GetByIdAsync(Guid Id)
+        public async Task<bool> DeleteRangeAsync(List<Guid> Ids)
         {
-            throw new NotImplementedException();
+            var entitys = await _dbContext.Set<TEntity>()
+                .Where(entity => Ids.Contains((Guid) entity.GetType().GetProperty("Id").GetValue(entity)))
+                .ToListAsync();
+            if (entitys.Count <= 0)
+                throw new Exception("Entity not found.");
+            _dbContext.Set<TEntity>().RemoveRange(entitys);
+            return await SaveChangeAsync() > 0;
         }
+
+        public IQueryable<TEntity> GetQueryable()
+            => _dbContext.Set<TEntity>().AsQueryable();
+
+        public async Task<int> SaveChangeAsync()
+            => await _dbContext.SaveChangesAsync();
     }
 }
+
+
+
+
