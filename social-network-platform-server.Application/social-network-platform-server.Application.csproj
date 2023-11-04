@@ -7,4 +7,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\social-network-platform-server.Application.Contracts\social-network-platform-server.Application.Contracts.csproj" />
+    <ProjectReference Include="..\social-network-platform-server.Domain\social-network-platform-server.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

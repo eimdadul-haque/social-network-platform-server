@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace social_network_platform_server.Domain.Posts
 {
-    public class Post : AuditEntity
+    public class Post : AuditEntity<Guid>
     {
         public string Title { get; set; }
         public string Content { get; set; }

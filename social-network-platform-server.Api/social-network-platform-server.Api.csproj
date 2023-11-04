@@ -7,4 +7,8 @@
     <RootNamespace>social_network_platform_server.Api</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\social-network-platform-server.Application\social-network-platform-server.Application.csproj" />
+  </ItemGroup>
+
 </Project>

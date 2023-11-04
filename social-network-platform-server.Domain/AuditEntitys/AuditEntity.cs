@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace social_network_platform_server.Domain.AuditEntitys
 {
-    public class AuditEntity
+    public class AuditEntity<Tkey>
     {
-        public Guid Id { get; set; }
+        public Tkey Id { get; set; }
         public DateTime Created { get; set; }
         public string CreatedBy { get; set; }
         public DateTime Modified { get; set; }
