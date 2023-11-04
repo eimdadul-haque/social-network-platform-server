@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace social_network_platform_server.Domain.Notifications
 {
-    public class Notification : AuditEntity
+    public class Notification : AuditEntity<Guid>
     {
         public int MyProperty { get; set; }
 

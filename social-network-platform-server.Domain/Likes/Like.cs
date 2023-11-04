@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace social_network_platform_server.Domain.Likes
 {
-    public class Like : AuditEntity
+    public class Like : AuditEntity<Guid>
     {
         public Guid PostID { get; set; }
         [ForeignKey("PostID")] public Post Post { get; set; }

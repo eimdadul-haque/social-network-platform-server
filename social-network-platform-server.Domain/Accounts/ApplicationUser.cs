@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace social_network_platform_server.Domain.Accounts
 {
-    public class ApplicationUser : AuditEntity
+    public class ApplicationUser : AuditEntity<Guid>
     { 
         public string UserName { get; set; }
         public string FullName { get; set; }

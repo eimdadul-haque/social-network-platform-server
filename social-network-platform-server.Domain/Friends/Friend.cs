@@ -9,7 +9,7 @@ using static System.Formats.Asn1.AsnWriter;
 
 namespace social_network_platform_server.Domain.Friends
 {
-    public class Friend : AuditEntity
+    public class Friend : AuditEntity<Guid>
     {
         public int MyProperty { get; set; }
         public Guid UserIdOne { get; set; }

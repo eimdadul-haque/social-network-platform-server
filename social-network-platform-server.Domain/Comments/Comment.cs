@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace social_network_platform_server.Domain.Comments
 {
-    public class Comment : AuditEntity
+    public class Comment : AuditEntity<Guid>
     {
         public Guid? ParentCommentId { get; set; }
         public Guid AuthorID { get; set; }
