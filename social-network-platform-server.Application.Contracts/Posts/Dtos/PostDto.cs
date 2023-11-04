@@ -12,7 +12,7 @@ namespace social_network_platform_server.Application.Contracts.Posts.Dtos
         public string Content { get; set; }
         public Guid AuthorID { get; set; }
         public DateTime PublishedDate { get; set; }
-        public List<Comment> Comments { get; set; }
-        public List<Like> Likes { get; set; }
+        //public List<Comment> Comments { get; set; }
+        //public List<Like> Likes { get; set; }
     }
 }

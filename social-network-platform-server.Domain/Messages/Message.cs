@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace social_network_platform_server.Domain.Messages
 {
-    public class Message : AuditEntity
+    public class Message : AuditEntity<Guid>
     {
         public Guid SenderID { get; set; }
         public Guid RecipientID { get; set; }
