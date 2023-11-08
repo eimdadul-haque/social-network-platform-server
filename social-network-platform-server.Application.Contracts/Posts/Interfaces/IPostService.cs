@@ -10,13 +10,13 @@ namespace social_network_platform_server.Application.Contracts.Posts.Interfaces
     public interface IPostService
     {
         //Enables users to create new posts.
-        Task<PostDto> CreatePost(PostDto entity);
+        Task<bool> CreatePost(PostDto entity);
 
         //Retrieves details of a specific post.
         Task<PostDto> GetPost(Guid Id);
 
         //Allows users to edit their own posts.
-        Task<PostDto> EditPost(PostDto entity);
+        Task<bool> EditPost(PostDto entity);
 
         //Deletes a user's own post.
         Task<bool> DeletePost(Guid Id);
