@@ -1,4 +1,5 @@
-﻿using social_network_platform_server.Application.Contracts.Posts.Dtos;
+﻿using AutoMapper;
+using social_network_platform_server.Application.Contracts.Posts.Dtos;
 using social_network_platform_server.Application.Contracts.Posts.Interfaces;
 using social_network_platform_server.Application.Contracts.Repository.Interfaces;
 using social_network_platform_server.Domain.Likes;
@@ -14,29 +15,35 @@ namespace social_network_platform_server.Application.Posts
     public class PostService : IPostService
     {
         private readonly IRepository<Post> _postRepository;
+        private readonly IMapper _mapper;
         public PostService(
-            IRepository<Post> postRepository)
+            IRepository<Post> postRepository,
+            IMapper mapper)
         {
+            _mapper = mapper;
             _postRepository = postRepository;
         }
+
+        public async Task<bool> CreatePost(PostDto input)
+        {
+            return await _postRepository
+                .AddAsync(_mapper.Map<Post>(input)) is not null;
+        }
+
         public Task<bool> AddCommentToPost(PostDto entity)
         {
             throw new NotImplementedException();
         }
 
-        public Task<PostDto> CreatePost(PostDto entity)
+        public async Task<bool> DeletePost(Guid Id)
         {
-            throw new NotImplementedException();
+            return await _postRepository.DeleteAsync(Id);
         }
 
-        public Task<bool> DeletePost(Guid Id)
+        public async Task<bool> EditPost(PostDto input)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<PostDto> EditPost(PostDto entity)
-        {
-            throw new NotImplementedException();
+            return await _postRepository
+                .UpdateAsync(_mapper.Map<Post>(input)) is not null;
         }
 
         public Task<List<PostDto>> GetFriendPosts(Guid userId)
