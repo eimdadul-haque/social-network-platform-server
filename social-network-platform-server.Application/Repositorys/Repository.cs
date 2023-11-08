@@ -33,7 +33,21 @@ namespace social_network_platform_server.Application.Repositorys
         {
             await _dbContext.Set<TEntity>()
                 .AddRangeAsync(entities);
-            if (await SaveChangeAsync() > 0) return entities;
+
+            if (await SaveChangeAsync() > 0) 
+                return entities;
+
+            throw new Exception("Entity not added.");
+        }
+
+        public async Task<TEntity> UpdateAsync(TEntity entity)
+        {
+            _dbContext.Set<TEntity>()
+                .Update(entity);
+
+            if (await SaveChangeAsync() > 0)
+                return entity;
+
             throw new Exception("Entity not added.");
         }
 
@@ -46,7 +60,9 @@ namespace social_network_platform_server.Application.Repositorys
         public async Task<bool> DeleteAsync(Guid Id)
         {
             var entity = await _dbContext.Set<TEntity>().FindAsync(Id);
+
             if (entity is null) throw new Exception("Entity not found.");
+
             _dbContext.Set<TEntity>().Remove(entity);
             return await SaveChangeAsync() > 0;
         }
@@ -56,8 +72,10 @@ namespace social_network_platform_server.Application.Repositorys
             var entitys = await _dbContext.Set<TEntity>()
                 .Where(entity => Ids.Contains((Guid) entity.GetType().GetProperty("Id").GetValue(entity)))
                 .ToListAsync();
+
             if (entitys.Count <= 0)
                 throw new Exception("Entity not found.");
+
             _dbContext.Set<TEntity>().RemoveRange(entitys);
             return await SaveChangeAsync() > 0;
         }
