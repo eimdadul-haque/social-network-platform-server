@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Serilog.AspNetCore" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\social-network-platform-server.Application.Contracts\social-network-platform-server.Application.Contracts.csproj" />
     <ProjectReference Include="..\social-network-platform-server.Domain\social-network-platform-server.Domain.csproj" />
     <ProjectReference Include="..\social-network-platform-server.Infrastructure\social-network-platform-server.Infrastructure.csproj" />

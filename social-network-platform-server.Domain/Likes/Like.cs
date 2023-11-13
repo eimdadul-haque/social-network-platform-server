@@ -12,9 +12,9 @@ namespace social_network_platform_server.Domain.Likes
 {
     public class Like : AuditEntity<Guid>
     {
-        public Guid PostID { get; set; }
+        public Guid? PostID { get; set; }
         [ForeignKey("PostID")] public Post Post { get; set; }
-        public Guid CommentID { get; set; }
+        public Guid? CommentID { get; set; }
         [ForeignKey("CommentID")] public Comment Comment { get; set; }
         public Guid UserID { get; set; }
     }

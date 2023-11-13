@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace social_network_platform_server.Application.Repositorys
 {
-    public class Repository<TEntity> where TEntity : class, IRepository<TEntity>
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
         private readonly ApplicationDbContext _dbContext;
         public Repository(
@@ -59,11 +59,15 @@ namespace social_network_platform_server.Application.Repositorys
 
         public async Task<bool> DeleteAsync(Guid Id)
         {
-            var entity = await _dbContext.Set<TEntity>().FindAsync(Id);
+            var entity = await _dbContext.Set<TEntity>()
+                .FindAsync(Id);
 
-            if (entity is null) throw new Exception("Entity not found.");
+            if (entity is null) 
+                throw new Exception("Entity not found.");
 
-            _dbContext.Set<TEntity>().Remove(entity);
+            _dbContext.Set<TEntity>()
+                .Remove(entity);
+
             return await SaveChangeAsync() > 0;
         }
 
@@ -76,7 +80,9 @@ namespace social_network_platform_server.Application.Repositorys
             if (entitys.Count <= 0)
                 throw new Exception("Entity not found.");
 
-            _dbContext.Set<TEntity>().RemoveRange(entitys);
+            _dbContext.Set<TEntity>()
+                .RemoveRange(entitys);
+
             return await SaveChangeAsync() > 0;
         }
 

@@ -26,8 +26,11 @@ namespace social_network_platform_server.Application.Posts
 
         public async Task<bool> CreatePost(PostDto input)
         {
+            //var entity = _mapper.Map<PostDto, Post>(input);
+            var entity = new Post();
+            entity.Id = Guid.NewGuid();
             return await _postRepository
-                .AddAsync(_mapper.Map<Post>(input)) is not null;
+                .AddAsync(entity) is not null;
         }
 
         public Task<bool> AddCommentToPost(PostDto entity)
