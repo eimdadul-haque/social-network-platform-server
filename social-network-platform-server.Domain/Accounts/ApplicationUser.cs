@@ -12,5 +12,6 @@ namespace social_network_platform_server.Domain.Accounts
     { 
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public DateTime DateOfBirth { get; set; }
     }
 }

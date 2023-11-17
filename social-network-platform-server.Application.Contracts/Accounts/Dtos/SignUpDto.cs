@@ -16,10 +16,13 @@ namespace social_network_platform_server.Application.Contracts.Accounts.Dtos
         public string LastName { get; set; }
 
         [Required]
-        public string Usename { get; set; }
+        public string Username { get; set; }
 
         [Required]
         public string Email { get; set; }
+
+        [Required]
+        public string PhoneNumber { get; set; }
 
         [Required]
         public DateTime DateOfBirth { get; set; }
