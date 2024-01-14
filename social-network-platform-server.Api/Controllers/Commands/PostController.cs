@@ -18,8 +18,8 @@ namespace social_network_platform_server.Api.Controllers.Commands
         [HttpPost("CreatePost")]
         public async Task<IActionResult> CreatePost(PostDto input)
         {
-            var a = await _postService.CreatePost(input);
-            return Ok();
+            var result = await _postService.CreatePost(input);
+            return Ok(result);
         }
     }
 }

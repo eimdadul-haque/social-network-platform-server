@@ -10,7 +10,7 @@ namespace social_network_platform_server.Application.Contracts.Posts.Dtos
 {
     public class PostDto : AuditEntityDto<Guid>
     {
-        public string Title { get; set; }
+        public string? Title { get; set; }
         public string Content { get; set; }
         public Guid? AuthorID { get; set; }
         public DateTime PublishedDate { get; set; }

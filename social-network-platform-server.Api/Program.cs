@@ -36,6 +36,16 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
+builder.Services.AddCors(optons =>
+{
+    optons.AddDefaultPolicy(builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyHeader()
+               .AllowAnyMethod();
+    });
+});
+
 builder.Services.Configure<IdentityOptions>(options =>
 {
     options.Password.RequireDigit = false;
@@ -84,6 +94,7 @@ if (app is not null)
 app.UseMiddleware<GlobalErrorHandler>();
 app.UseHttpsRedirection();
 app.UseAuthorization();
+app.UseCors();
 
 app.MapControllers();
 app.Run();

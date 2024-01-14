@@ -11,4 +11,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.14" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\social-network-platform-server.Application.Contracts\social-network-platform-server.Application.Contracts.csproj" />
+  </ItemGroup>
+
 </Project>

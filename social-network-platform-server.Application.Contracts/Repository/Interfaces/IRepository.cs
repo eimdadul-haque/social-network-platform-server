@@ -15,5 +15,6 @@ namespace social_network_platform_server.Application.Contracts.Repository.Interf
         Task<List<TEntity>> GetAllAsync();
         Task<bool> DeleteAsync(Guid Id);
         Task<int> SaveChangeAsync();
+        IQueryable<TEntity> GetQueryable();
     }
 }

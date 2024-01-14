@@ -11,9 +11,9 @@ namespace social_network_platform_server.Domain.AuditEntitys
         public Tkey Id { get; set; }
         public DateTime Created { get; set; }
         public string CreatedBy { get; set; }
-        public DateTime Modified { get; set; }
-        public string ModifiedBy { get; set; }
-        public bool IsDeleted { get; set; }
-        public bool IsActive { get; set; }
+        public DateTime? Modified { get; set; }
+        public string? ModifiedBy { get; set; }
+        public bool IsDeleted { get; set; } = false;
+        public bool IsActive { get; set; } = true;
     }
 }
