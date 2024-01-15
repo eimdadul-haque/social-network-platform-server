@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Azure.Core;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using social_network_platform_server.Application.Contracts.Posts.Dtos;
 using social_network_platform_server.Application.Contracts.Posts.Interfaces;
 
 namespace social_network_platform_server.Api.Controllers.Queries.Posts
@@ -15,10 +17,10 @@ namespace social_network_platform_server.Api.Controllers.Queries.Posts
             _postService = postService;
         }
 
-        [HttpGet("get-user-posts")]
-        public async Task<IActionResult> GetUserPosts([FromQuery] Guid userId)
+        [HttpPost("get-user-posts")]
+        public async Task<IActionResult> GetUserPosts(PostRequestDto request)
         {
-            var result = await _postService.GetUserPosts(userId);
+            var result = await _postService.GetUserPosts(request);
             return Ok(new {items = result.items, totalCount = result.totalCount});
         }
     }

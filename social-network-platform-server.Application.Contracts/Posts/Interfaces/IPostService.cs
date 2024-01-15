@@ -23,7 +23,7 @@ namespace social_network_platform_server.Application.Contracts.Posts.Interfaces
         Task<bool> DeletePost(Guid Id);
 
         //Retrieves posts created by a specific user.
-        Task<PageResultDto<PostDto>> GetUserPosts(Guid userId);
+        Task<PageResultDto<PostDto>> GetUserPosts(PostRequestDto request);
 
         //Displays posts from friends in the user's network.
         Task<List<PostDto>> GetFriendPosts(Guid userId);

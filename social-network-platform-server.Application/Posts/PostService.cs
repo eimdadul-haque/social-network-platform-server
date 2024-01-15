@@ -62,26 +62,38 @@ namespace social_network_platform_server.Application.Posts
             throw new NotImplementedException();
         }
 
-        public async Task<PageResultDto<PostDto>> GetUserPosts(Guid userId)
+        public async Task<PageResultDto<PostDto>> GetUserPosts(PostRequestDto request)
         {
             IQueryable<Post> postQuery = _postRepository
                 .GetQueryable();
 
-            int totalCount = postQuery.Count();
-            
-            var posts = await postQuery
-                .Where(post => post.AuthorID == userId)
-                .ToListAsync();
+            if (request.UserId != null && request.UserId != Guid.Empty)
+                postQuery = postQuery.Where(post => post.AuthorID == request.UserId);
 
-            var postDtos = posts.Select(x => new PostDto()
+            var totalCount = postQuery.Count();
+            
+            if (request.Page > 1)
             {
-                AuthorID = x.AuthorID,
-                Content = x.Content,
-                Comments = null,
-                Likes = null,
-                Title = x.Title,
-                PublishedDate = x.PublishedDate
-            }).ToList();
+                int skip = (request.Page - 1) * request.MaxCount;
+                postQuery = postQuery.Skip(skip).Take(request.MaxCount);
+            }
+            else
+            {
+                postQuery = postQuery.Skip(0).Take(request.MaxCount);
+            }
+
+            var postDtos = await postQuery
+                .Skip(request.SkipCount)
+                .Take(request.MaxCount)
+                .Select(x => new PostDto()
+                {
+                    AuthorID = x.AuthorID,
+                    Content = x.Content,
+                    Comments = null,
+                    Likes = null,
+                    Title = x.Title,
+                    PublishedDate = x.PublishedDate
+                }).ToListAsync();
 
             return new PageResultDto<PostDto>(postDtos, totalCount);
         }
