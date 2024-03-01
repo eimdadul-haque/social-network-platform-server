@@ -15,5 +15,6 @@ namespace social_network_platform_server.Application.Contracts.Posts.Dtos
         public int MaxCount { get; set; }
         public int SkipCount { get; set; }
         public int Page { get; set; }
+        public int LoadCount { get; set; }
     }
 }

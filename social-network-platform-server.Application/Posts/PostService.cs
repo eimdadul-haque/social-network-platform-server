@@ -71,29 +71,19 @@ namespace social_network_platform_server.Application.Posts
                 postQuery = postQuery.Where(post => post.AuthorID == request.UserId);
 
             var totalCount = postQuery.Count();
-            
-            if (request.Page > 1)
-            {
-                int skip = (request.Page - 1) * request.MaxCount;
-                postQuery = postQuery.Skip(skip).Take(request.MaxCount);
-            }
-            else
-            {
-                postQuery = postQuery.Skip(0).Take(request.MaxCount);
-            }
 
             var postDtos = await postQuery
-                .Skip(request.SkipCount)
-                .Take(request.MaxCount)
-                .Select(x => new PostDto()
+                .Skip(10)
+                .Select(post => new PostDto()
                 {
-                    AuthorID = x.AuthorID,
-                    Content = x.Content,
+                    AuthorID = post.AuthorID,
+                    Content = post.Content,
                     Comments = null,
                     Likes = null,
-                    Title = x.Title,
-                    PublishedDate = x.PublishedDate
-                }).ToListAsync();
+                    Title = post.Title,
+                    PublishedDate = post.PublishedDate
+                })
+                .ToListAsync();
 
             return new PageResultDto<PostDto>(postDtos, totalCount);
         }
